@@ -124,14 +124,14 @@ namespace MarvelTerrariaUniverse.Content.Items.Weapons.Mjolnir
                     }
                     if (!charged)
                     {
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<MjolnirProjectile>(), damage / 4, knockback, player.whoAmI, (int)DateTime.Now.Ticks, 1, 3);
+                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<MjolnirLightning>(), damage / 4, knockback, player.whoAmI, (int)DateTime.Now.Ticks);
                         chargeInt++;
                         if (chargeInt >= 100) charged = true;
                         return false;
                     }
                     else if (charged)
                     {
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<MjolnirProjectile>(), damage / 4, knockback, player.whoAmI, (int)DateTime.Now.Ticks, 2, 3);
+                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<MjolnirLightning>(), damage / 4, knockback, player.whoAmI, (int)DateTime.Now.Ticks);
                         chargeInt -= 0.25f;
                         if (chargeInt <= 0) charged = false;
                         return false;

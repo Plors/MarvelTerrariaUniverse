@@ -31,7 +31,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Content\Dusts\" />
-	  <Folder Include="Content\NPCs\Boss\IronMongerTest\" />
 	  <Folder Include="Content\NPCs\Town\" />
 	  <Folder Include="Content\Projectiles\Boss\IronMonger\" />
 	</ItemGroup>

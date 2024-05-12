@@ -1,8 +1,8 @@
-﻿using MarvelTerrariaUniverse.Content.Buffs;
+﻿using MarvelTerrariaUniverse.Common.Players;
+using MarvelTerrariaUniverse.Content.Buffs;
 using MarvelTerrariaUniverse.Content.Projectiles.Arsenal;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace MarvelTerrariaUniverse.Content.Items.Accessories.IronMan;
@@ -10,6 +10,7 @@ public class ArsenalRepulsor : ArsenalItem
 {
     int cd = 0;
     bool offCD = true;
+    IronManPlayer IMplayer;
     public override void UpdateArsenal(Player player)
     {
         base.UpdateArsenal(player);

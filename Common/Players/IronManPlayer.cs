@@ -43,6 +43,8 @@ public class IronManPlayer : ModPlayer
 
     public int ArmorMode = 0;
 
+    public bool ArmRotation = false;
+
     public bool HelmetClosed = true;
     public bool PlayFaceplateAnimation = false;
     public int FaceplateAnimationTimer = 0;
@@ -242,8 +244,9 @@ public class IronManPlayer : ModPlayer
     {
         if (Player.HasBuff(BuffID.Frozen) || Player.HasBuff(ModContent.BuffType<Waterlogged>())) { CurrentSuitState = SuitState.None; Player.mount.Dismount(Player); }
             if (Mark == 0) return;
-
         // CycleSuits(60);
+
+        if (ArmRotation) Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (Player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2 - Player.fullRotation); ;
 
         if (PlayFaceplateAnimation) UpdateFaceplateAnimation(5);
 

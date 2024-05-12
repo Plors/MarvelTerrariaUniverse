@@ -67,10 +67,10 @@ namespace MarvelTerrariaUniverse.Content.NPCs.Boss.IronMonger
             NPC.boss = true;
             NPC.npcSlots = 10f;
             NPC.aiStyle = -1;
-            //if (!Main.dedServ)
-            //{
-            //    Music = MusicLoader.GetMusicSlot(Mod, "");
-            //}
+            if (!Main.dedServ)
+            {
+                Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/IronMonger");
+            }
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using Terraria.ModLoader;
 using Terraria.Enums;
 using Terraria;
+using MarvelTerrariaUniverse.Common.Players;
 
 namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
 {
     public class Repulsor : ModProjectile
     {
+        IronManPlayer IMplayer;
         private int frameCounter = 0;
         private enum ProjectileType
         {
@@ -111,8 +113,12 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
             int tailFrameHeight = 16; // Height of each animation frame
 
             Rectangle tailSourceRect = new Rectangle(currentLaserFrame * tailFrameWidth, 0, tailFrameWidth, tailFrameHeight);
-
-            Main.spriteBatch.Draw(texture, start + unit * (transDist - step) - Main.screenPosition,
+            float startAdjust = 5;
+            if (ProjType == ProjectileType.Unibeam)
+            {
+                startAdjust = 15;
+            }
+            Main.spriteBatch.Draw(texture, start + unit * (transDist - startAdjust) - Main.screenPosition,
                 tailSourceRect, Color.White, r, new Vector2(tailFrameWidth * .5f, tailFrameHeight * .5f), scale, 0, 0);
             #endregion
             #region Laser Head
@@ -162,6 +168,11 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
         // The AI of the Projectile
         public override void AI()
         {
+            IMplayer = Main.player[Projectile.owner].GetModPlayer<IronManPlayer>();
+            if (ProjType == ProjectileType.Repulsor)
+            {
+                IMplayer.ArmRotation = true;
+            }
             frameCounter++;
 
             if (ProjType == ProjectileType.Repulsor)
@@ -192,13 +203,13 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
                     currentPhase = Phase.End;
                 }
             }
-            
+
             Player player = Main.player[Projectile.owner];
             Projectile.position = player.Center + Projectile.velocity * MOVE_DISTANCE;
             UpdatePlayer(player);
             if (currentPhase != Phase.Charging)
             {
-            SetLaserPosition(new Rectangle());
+                SetLaserPosition(new Rectangle());
                 //SpawnDusts(player);
                 CastLights();
             }
@@ -276,6 +287,11 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
             }
         }
 
+        public override void OnKill(int timeLeft)
+        {
+            IMplayer.ArmRotation = false;
+            base.OnKill(timeLeft);
+        }
 
 
         private void UpdatePlayer(Player player)
