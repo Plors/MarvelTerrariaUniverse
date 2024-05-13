@@ -34,7 +34,7 @@ public class ArsenalMicroMissile : ArsenalItem
         if (!offCD)
         {
             cd++;
-            if (cd > 300)
+            if (cd > 300) // 5 seconds
             {
                 offCD = true;
                 cd = 0;

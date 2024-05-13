@@ -36,7 +36,7 @@ public class ArsenalRepulsor : ArsenalItem
         if (!offCD)
         {
             cd++;
-            if (cd >= 70)
+            if (cd >= 70) // 1.17 seconds
             {
                 offCD = true;
                 cd = 0;

@@ -35,7 +35,7 @@ public class ArsenalUnibeam : ArsenalItem
         if (!offCD)
         {
             cd++;
-            if (cd >= 200)
+            if (cd >= 200) // 3.33 seconds
             {
                 offCD = true;
                 cd = 0;

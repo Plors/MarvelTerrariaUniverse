@@ -30,7 +30,7 @@ public class ArsenalFlares : ArsenalItem
 
         // cooldown reset
         cdTimer += 1;
-        if (cdTimer >= 15 * 60)
+        if (cdTimer >= 15 * 60) //15 seconds
         {
             activateCd = true;
             cdTimer = 0;

@@ -54,7 +54,7 @@ public class ArsenalSideWinders : ArsenalItem
             if (!offCD)
             {
                 cd++;
-                if (cd > 20 * 60)
+                if (cd > 20 * 60) // 20 seconds
                 {
                     offCD = true;
                     cd = 0;
