@@ -20,7 +20,7 @@ public class Mk2Chestplate : IronManArmorChestplate
         if (player.ZoneSkyHeight)
         {
             //give frozen debuff for 5 seconds
-            player.AddBuff(BuffID.Frozen, 150);
+            player.AddBuff(BuffID.Frozen, 90);
         }
         if (player.wet)
         {

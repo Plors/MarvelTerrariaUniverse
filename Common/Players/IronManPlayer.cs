@@ -44,6 +44,7 @@ public class IronManPlayer : ModPlayer
     public int ArmorMode = 0;
 
     public bool ArmRotation = false;
+    public int ArmRotTimer = 0;
 
     public bool HelmetClosed = true;
     public bool PlayFaceplateAnimation = false;
@@ -58,6 +59,7 @@ public class IronManPlayer : ModPlayer
     public void UnequipSuit()
     {
         Mark = 0;
+        Player.cursorItemIconEnabled = true;
         Player.GetModPlayer<LoadoutPlayer>().ClearCurrentLoadout();
         Player.TrySwitchingLoadout(LastUsedLoadoutIndex);
     }
@@ -243,11 +245,20 @@ public class IronManPlayer : ModPlayer
     public override void PostUpdate()
     {
         if (Player.HasBuff(BuffID.Frozen) || Player.HasBuff(ModContent.BuffType<Waterlogged>())) { CurrentSuitState = SuitState.None; Player.mount.Dismount(Player); }
-            if (Mark == 0) return;
+        if (Mark == 0) return;
         // CycleSuits(60);
+        Player.cursorItemIconEnabled = false;
 
-        if (ArmRotation) Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (Player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2 - Player.fullRotation); ;
-
+        if (ArmRotation)
+        {
+            Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (Player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2 - Player.fullRotation); ;
+            ArmRotTimer++;
+            if (ArmRotTimer > 60)
+            {
+                ArmRotation = false;
+                ArmRotTimer = 0;
+            }
+        } else if (!ArmRotation) ArmRotTimer = 0;
         if (PlayFaceplateAnimation) UpdateFaceplateAnimation(5);
 
         EyeSlitColorEasterEgg();
@@ -297,6 +308,12 @@ public class IronManPlayer : ModPlayer
         else targetHeadRotation = 0f;
 
         Player.headRotation = Utils.AngleLerp(Player.headRotation, targetHeadRotation, 0.25f);
+    }
+
+    public override bool CanUseItem(Item item)
+    {
+        if (Mark != 0) return false;
+        return base.CanUseItem(item);
     }
 
     public override void ProcessTriggers(TriggersSet triggersSet)

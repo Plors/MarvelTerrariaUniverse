@@ -1,7 +1,9 @@
-﻿using MarvelTerrariaUniverse.Content.Buffs;
+﻿using MarvelTerrariaUniverse.Common.Players;
+using MarvelTerrariaUniverse.Content.Buffs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Map;
 using Terraria.ModLoader;
 
 namespace MarvelTerrariaUniverse.Content.Items.Accessories.IronMan;
@@ -9,8 +11,10 @@ public class ArsenalCrudeFlamethrower : ArsenalItem
 {
     private int cooldown = 0;
     private int ammoFrameLimit = 0;
+    private IronManPlayer IMplayer;
     public override void UpdateArsenal(Player player)
     {
+        IMplayer = player.GetModPlayer<IronManPlayer>();
 
         // this runs every frame when you have the arsenal selected and press the left mouse button
         base.UpdateArsenal(player);
@@ -30,24 +34,31 @@ public class ArsenalCrudeFlamethrower : ArsenalItem
         {
             relativeMousePos = Vector2.Normalize(relativeMousePos) * 7;
         }
-        //player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, angle);
         //check if the player has gel in their inventory
         if (player.CountItem(ItemID.Gel) > 0)
         {
-            //2nd to last number is dmg value, needs balancing
-            Projectile.NewProjectile(Terraria.Entity.GetSource_None(), player.Center, relativeMousePos, ProjectileID.Flames, 5, 1);
-            
-            // Cant figure out arm rotation
-            //player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2 - player.fullRotation);
-            
-            
-            ammoFrameLimit++;
-            if (ammoFrameLimit > 15) //2 gel a second
+            IMplayer.ArmRotation = true;
+            cooldown++;
+            if (cooldown > 5)
             {
-               player.ConsumeItem(ItemID.Gel);
-               ammoFrameLimit = 0;
+                //2nd to last number is dmg value, needs balancing
+                Projectile.NewProjectile(Terraria.Entity.GetSource_None(), player.Center, relativeMousePos, ProjectileID.Flames, 5, 1);
+                cooldown = 0;
+            }
+
+            ammoFrameLimit++;
+            if (ammoFrameLimit > 15) //4 gel a second
+            {
+                player.ConsumeItem(ItemID.Gel);
+                ammoFrameLimit = 0;
             }
         }
+
+    }
+
+    public override void UpdateAccessory(Player player, bool hideVisual)
+    {
+        base.UpdateAccessory(player, hideVisual);
 
     }
 }

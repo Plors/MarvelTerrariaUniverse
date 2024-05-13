@@ -4,7 +4,7 @@ public class KeybindSystem : ModSystem
 {
     public static ModKeybind ToggleFaceplate;
     public static ModKeybind ToggleFlight;
-    public static ModKeybind EjectSuit;
+    //public static ModKeybind EjectSuit;
     public static ModKeybind ArmorMode;
 
     public static void RegisterKeybindWithCategory(ref ModKeybind variableSavedTo, Mod mod, string category, string name, string defaultBinding)
@@ -17,7 +17,7 @@ public class KeybindSystem : ModSystem
     {
         RegisterKeybindWithCategory(ref ToggleFaceplate, Mod, "Iron Man", "ToggleFaceplate", "G");
         RegisterKeybindWithCategory(ref ToggleFlight, Mod, "Iron Man", "ToggleFlight", "F");
-        RegisterKeybindWithCategory(ref EjectSuit, Mod, "Iron Man", "EjectSuit", "X");
+        //RegisterKeybindWithCategory(ref EjectSuit, Mod, "Iron Man", "EjectSuit", "X");
         RegisterKeybindWithCategory(ref ArmorMode, Mod, "Iron Man", "ToggleArmorMode", "Q");
 
     }
@@ -26,7 +26,7 @@ public class KeybindSystem : ModSystem
     {
         ToggleFaceplate = null;
         ToggleFlight = null;
-        EjectSuit = null;
+        //EjectSuit = null;
         ArmorMode = null;
     }
 }

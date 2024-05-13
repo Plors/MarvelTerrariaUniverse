@@ -21,10 +21,6 @@ public class Mk1Chestplate : IronManArmorChestplate
         {
             player.AddBuff(ModContent.BuffType<Waterlogged>(), 150);
         }
-        // reduce player speed by 50%
-        player.moveSpeed *= 0.5f;
-        // decrease player jump height by 25%
-        player.jumpSpeedBoost *= 0.75f;
         //increase defense by 20
         player.statDefense += 20;
     }
