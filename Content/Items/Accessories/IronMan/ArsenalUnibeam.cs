@@ -1,8 +1,10 @@
-﻿using MarvelTerrariaUniverse.Content.Buffs;
+﻿using MarvelTerrariaUniverse.Common.Players;
+using MarvelTerrariaUniverse.Content.Buffs;
 using MarvelTerrariaUniverse.Content.Projectiles.Arsenal;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Map;
 using Terraria.ModLoader;
 
 namespace MarvelTerrariaUniverse.Content.Items.Accessories.IronMan;
@@ -10,9 +12,16 @@ public class ArsenalUnibeam : ArsenalItem
 {
     int cd = 0;
     bool offCD = true;
+    IronManPlayer IMplayer;
+
     public override void UpdateArsenal(Player player)
     {
         base.UpdateArsenal(player);
+        IMplayer = player.GetModPlayer<IronManPlayer>();
+        if (IMplayer.Mark <= 5 && ((IMplayer.CurrentSuitState == IronManPlayer.SuitState.Flying) || (IMplayer.CurrentSuitState == IronManPlayer.SuitState.Hovering)))
+        {
+            return;
+        }
         if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
         {
             return;

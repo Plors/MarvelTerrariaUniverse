@@ -14,6 +14,13 @@ public class ArsenalRepulsor : ArsenalItem
     public override void UpdateArsenal(Player player)
     {
         base.UpdateArsenal(player);
+
+        IMplayer = player.GetModPlayer<IronManPlayer>();
+        if (IMplayer.Mark <= 5 && ((IMplayer.CurrentSuitState == IronManPlayer.SuitState.Flying) || (IMplayer.CurrentSuitState == IronManPlayer.SuitState.Hovering)))
+        {
+            return;
+        }
+
         if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
         {
             return;

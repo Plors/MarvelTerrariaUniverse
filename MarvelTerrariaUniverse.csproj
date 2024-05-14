@@ -13,7 +13,12 @@
 		<None Remove="Assets\Textures\Transformations\IronMan\Mark2\Faceplate\**" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Assets\Glowmasks\Faceplate2 - Copy.png" />
+	  <None Remove="Assets\Glowmasks\FlightFlameAlt.png" />
+	  <None Remove="Assets\Glowmasks\FlightFlameFiring.png" />
 	  <None Remove="Content\Items\Accessories\IronMan\AirDust - Copy.png" />
+	  <None Remove="Content\Items\Accessories\IronMan\ArsenalRocketBoots.png" />
+	  <None Remove="Content\Items\Accessories\IronMan\ArsenalRocketBoots_Wings.png" />
 	  <None Remove="Content\Items\Accessories\IronMan\IronManRepulsorwait.png" />
 	  <None Remove="Content\Items\Accessories\IronMan\MjolnirFly.png" />
 	  <None Remove="Content\Items\Weapons\Mjolnir\MjolnirProjectile.png" />

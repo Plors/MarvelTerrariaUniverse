@@ -27,6 +27,8 @@ Mods: {
 			Flares.DisplayName: Flares
 			Repulsor.DisplayName: Repulsor
 			Unibeam.DisplayName: Unibeam
+			TestProj.DisplayName: Test Proj
+			YakaArrowProj.DisplayName: Yaka Arrow Proj
 		}
 
 		Items: {
@@ -58,6 +60,21 @@ Mods: {
 				DisplayName: Gantry Tile Item
 				Tooltip: ""
 			}
+
+			InhibitorChip: {
+				DisplayName: Inhibitor Chip
+				Tooltip: ""
+			}
+
+			YakaArrow: {
+				DisplayName: Yaka Arrow
+				Tooltip: ""
+			}
+
+			ArsenalRocketBoots: {
+				DisplayName: Arsenal Rocket Boots
+				Tooltip: ""
+			}
 		}
 
 		Keybinds: {
@@ -67,6 +84,7 @@ Mods: {
 			EjectSuit.DisplayName: Eject Suit
 			ReloadUI.DisplayName: Reload UI
 			ToggleArmorMode.DisplayName: Toggle Armor Mode
+			"ToggleFlight, Cannot be Mount Key.DisplayName": Toggle Flight,  Cannot be  Mount  Key
 		}
 
 		IronMan: {

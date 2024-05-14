@@ -16,7 +16,7 @@ public class KeybindSystem : ModSystem
     public override void Load()
     {
         RegisterKeybindWithCategory(ref ToggleFaceplate, Mod, "Iron Man", "ToggleFaceplate", "G");
-        RegisterKeybindWithCategory(ref ToggleFlight, Mod, "Iron Man", "ToggleFlight", "F");
+        RegisterKeybindWithCategory(ref ToggleFlight, Mod, "Iron Man", "ToggleFlight, Cannot be Mount Key", "F");
         //RegisterKeybindWithCategory(ref EjectSuit, Mod, "Iron Man", "EjectSuit", "X");
         RegisterKeybindWithCategory(ref ArmorMode, Mod, "Iron Man", "ToggleArmorMode", "Q");
 

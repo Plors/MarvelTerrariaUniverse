@@ -172,6 +172,7 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
             if (ProjType == ProjectileType.Repulsor)
             {
                 IMplayer.ArmRotation = true;
+                Projectile.penetrate = 1;
             }
             frameCounter++;
 

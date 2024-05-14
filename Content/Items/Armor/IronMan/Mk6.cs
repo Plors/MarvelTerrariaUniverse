@@ -24,7 +24,10 @@ public class Mk6Chestplate : IronManArmorChestplate
         player.buffImmune[BuffID.Chilled] = true;
         player.buffImmune[BuffID.Frozen] = true;
         player.buffImmune[BuffID.Electrified] = true;
-
+        if (player.wet)
+        {
+            player.gills = true;
+        }
     }
 }
 
