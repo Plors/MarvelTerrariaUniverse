@@ -12,7 +12,7 @@ public class Mk1Helmet : IronManArmorHelmet<Mk1Chestplate, Mk1Leggings> { }
 [AutoloadEquip(EquipType.Body), Mark(1)]
 public class Mk1Chestplate : IronManArmorChestplate
 {
-    public override List<int> Arsenal => new() { ModContent.ItemType<ArsenalCrudeFlamethrower>(), ModContent.ItemType<ArsenalCrudeMissile>() };
+    public override List<int> Arsenal => new() { ModContent.ItemType<ArsenalCrudeFlamethrower>(), ModContent.ItemType<ArsenalCrudeMissile>(), ModContent.ItemType<ArsenalRocketBoots>()};
 
     public override void UpdateEquip(Player player)
     {

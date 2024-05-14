@@ -19,8 +19,8 @@ public class Mk2Chestplate : IronManArmorChestplate
         //check if the player is in space biome
         if (player.ZoneSkyHeight)
         {
-            //give frozen debuff for 5 seconds
-            player.AddBuff(BuffID.Frozen, 90);
+            //give frozen debuff for 2 seconds
+            player.AddBuff(BuffID.Frozen, 60);
         }
         if (player.wet)
         {

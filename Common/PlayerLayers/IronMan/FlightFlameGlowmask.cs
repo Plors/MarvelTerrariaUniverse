@@ -25,8 +25,7 @@ public class FlightFlameGlowmask : PlayerDrawLayer
     {
         Player drawPlayer = drawInfo.drawPlayer;
         IronManPlayer modPlayer = drawPlayer.GetModPlayer<IronManPlayer>();
-        Asset<Texture2D> texture = ModContent.Request<Texture2D>($"{nameof(MarvelTerrariaUniverse)}/Assets/Glowmasks/FlightFlame{(modPlayer.CurrentSuitState == IronManPlayer.SuitState.Hovering ? "Alt" : "")}");
-
+        Asset<Texture2D> texture = ModContent.Request<Texture2D>($"{nameof(MarvelTerrariaUniverse)}/Assets/Glowmasks/FlightFlame{(modPlayer.CurrentSuitState == IronManPlayer.SuitState.Hovering ? "Alt" : "")}{(modPlayer.ArmRotation ? "Firing" : "")}");
         int frameCount = modPlayer.CurrentSuitState == IronManPlayer.SuitState.Hovering ? 2 : 3;
         Vector2 drawPos = drawInfo.Position - Main.screenPosition + new Vector2(drawPlayer.width / 2 - 10f - (drawPlayer.direction == 1 ? 2f + (modPlayer.CurrentSuitState == IronManPlayer.SuitState.Flying ? 2f : 0f) : 4f), drawPlayer.height - 8f) + drawPlayer.legPosition;
         Vector2 legsOffset = drawInfo.legsOffset;

@@ -59,6 +59,7 @@ public class IronManPlayer : ModPlayer
     public void UnequipSuit()
     {
         Mark = 0;
+        Player.mount.Dismount(Player);
         Player.cursorItemIconEnabled = true;
         Player.GetModPlayer<LoadoutPlayer>().ClearCurrentLoadout();
         Player.TrySwitchingLoadout(LastUsedLoadoutIndex);
@@ -154,15 +155,18 @@ public class IronManPlayer : ModPlayer
 
     public void ToggleFlight()
     {
-        CurrentSuitState = CurrentSuitState != SuitState.None ? SuitState.None : SuitState.Flying;
+        if (Mark > 1)
+        {
+            CurrentSuitState = CurrentSuitState != SuitState.None ? SuitState.None : SuitState.Flying;
 
-        if (CurrentSuitState != SuitState.None && !Player.HasBuff(ModContent.BuffType<Waterlogged>()))
-        {
-            Player.mount.SetMount(ModContent.MountType<IronManFlight>(), Player, Player.direction == -1);
-        }
-        else
-        {
-            Player.mount.Dismount(Player);
+            if (CurrentSuitState != SuitState.None && !Player.HasBuff(ModContent.BuffType<Waterlogged>()))
+            {
+                Player.mount.SetMount(ModContent.MountType<IronManFlight>(), Player, Player.direction == -1);
+            }
+            else
+            {
+                Player.mount.Dismount(Player);
+            }
         }
     }
 
@@ -176,6 +180,7 @@ public class IronManPlayer : ModPlayer
 
         if ((!Player.controlUp && !Player.controlRight && !Player.controlDown && !Player.controlLeft && !Player.controlJump) || ((Math.Abs(Player.velocity.X) < 0.1f && Math.Abs(Player.velocity.Y) < 0.1f))) CurrentSuitState = SuitState.Hovering;
         else CurrentSuitState = SuitState.Flying;
+        PlayerInput.Triggers.JustPressed.QuickMount = false;
 
         Player.legFrame.Y = 0;
         Player.fullRotationOrigin = Player.Hitbox.Size() / 2;
@@ -202,32 +207,27 @@ public class IronManPlayer : ModPlayer
         Player.direction = targetDirection;
         Player.fullRotation = Utils.AngleLerp(Player.fullRotation, targetFullRotation, targetFullRotationAmount);
 
-        if (Mark == 1)
-        {
-            // Rocket boots dust bullshit lolxd pls help with this im lazy thx bye luv you bye
-        }
-        else
-        {
-            var distanceOffset = Player.Hitbox.Size() / 2f * 1.5f - new Vector2(Player.width - 2.5f, 0f);
-            var center = Player.Hitbox.Location.ToVector2() + new Vector2(0f, 10f) + distanceOffset.RotatedBy(Player.fullRotation);
 
-            var dust = Dust.NewDustDirect(center, Player.width, Player.height / 2, DustID.Smoke, 0f, 0f, 100, Scale: 0.5f);
-            dust.scale *= 1f + Main.rand.Next(10) * 0.1f;
-            dust.velocity *= 0.2f;
-            dust.noGravity = true;
 
-            if (Main.rand.NextBool(CurrentSuitState == SuitState.Hovering ? 5 : 1))
-            {
-                var dust2 = Dust.NewDustDirect(center, Player.width, Player.height / 2, DustID.Torch, Player.velocity.X * 0.2f, Player.velocity.Y * 0.2f, 100, Color.Yellow, 2f);
-                dust2.noGravity = true;
-                dust2.velocity *= 1.4f;
-                dust2.velocity += Main.rand.NextVector2Circular(1f, 1f);
-                dust2.velocity += Player.velocity * 0.15f;
-            }
+        var distanceOffset = Player.Hitbox.Size() / 2f * 1.5f - new Vector2(Player.width - 2.5f, 0f);
+        var center = Player.Hitbox.Location.ToVector2() + new Vector2(0f, 10f) + distanceOffset.RotatedBy(Player.fullRotation);
+
+        var dust = Dust.NewDustDirect(center, Player.width, Player.height / 2, DustID.Smoke, 0f, 0f, 100, Scale: 0.5f);
+        dust.scale *= 1f + Main.rand.Next(10) * 0.1f;
+        dust.velocity *= 0.2f;
+        dust.noGravity = true;
+
+        if (Main.rand.NextBool(CurrentSuitState == SuitState.Hovering ? 5 : 1))
+        {
+            var dust2 = Dust.NewDustDirect(center, Player.width, Player.height / 2, DustID.Torch, Player.velocity.X * 0.2f, Player.velocity.Y * 0.2f, 100, Color.Yellow, 2f);
+            dust2.noGravity = true;
+            dust2.velocity *= 1.4f;
+            dust2.velocity += Main.rand.NextVector2Circular(1f, 1f);
+            dust2.velocity += Player.velocity * 0.15f;
+
         }
 
         UpdateFlightFlameAnimation(5);
-
     }
 
     public void UpdateFlightFlameAnimation(int framerate)

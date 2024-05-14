@@ -1,9 +1,12 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using MarvelTerrariaUniverse.Common.Players;
 
 namespace MarvelTerrariaUniverse.Content.Mounts;
 public class IronManFlight : ModMount
 {
+    IronManPlayer IMplayer;
+    private bool mountCheck = false;
     public override void SetStaticDefaults()
     {
         MountData.totalFrames = 1;
@@ -52,5 +55,10 @@ public class IronManFlight : ModMount
     public override void Dismount(Player player, ref bool skipDust)
     {
         skipDust = true;
+        IMplayer = player.GetModPlayer<IronManPlayer>();
+        if (IMplayer.CurrentSuitState != IronManPlayer.SuitState.None)
+        {
+            IMplayer.ToggleFlight();
+        }
     }
 }
