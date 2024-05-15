@@ -89,6 +89,9 @@ public class IronManPlayer : ModPlayer
         Player.armor[1] = new Item(Mod.Find<ModItem>($"Mk{Mark}Chestplate").Type);
         Player.armor[2] = new Item(Mod.Find<ModItem>($"Mk{Mark}Leggings").Type);
 
+        Player.mount.Dismount(Player);
+        Player.RemoveAllGrapplingHooks();
+
         for (int i = 0; i < Player.hideVisibleAccessory.Length; i++)
         {
             Player.hideVisibleAccessory[i] = true;
