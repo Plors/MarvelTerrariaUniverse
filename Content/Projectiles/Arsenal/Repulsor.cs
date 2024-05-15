@@ -48,7 +48,7 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
             Projectile.width = 10;
             Projectile.height = 10;
             Projectile.friendly = true;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = /*ProjType == ProjectileType.Repulsor ? 1 :*/ -1;
             Projectile.tileCollide = true;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.hide = false;
@@ -172,7 +172,6 @@ namespace MarvelTerrariaUniverse.Content.Projectiles.Arsenal
             if (ProjType == ProjectileType.Repulsor)
             {
                 IMplayer.ArmRotation = true;
-                Projectile.penetrate = 1;
             }
             frameCounter++;
 

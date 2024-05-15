@@ -186,6 +186,8 @@ Items: {
 }
 
 Keybinds: {
+	ToggleBuildMode.DisplayName: Toggle Build Mode
+	ToggleAattackModes.DisplayName: Toggle Aattack Modes
 }
 
 Buffs: {

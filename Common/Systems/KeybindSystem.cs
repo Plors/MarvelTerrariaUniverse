@@ -2,10 +2,10 @@
 
 public class KeybindSystem : ModSystem
 {
-    public static ModKeybind ToggleFaceplate;
+    public static ModKeybind BuildMode;
     public static ModKeybind ToggleFlight;
     //public static ModKeybind EjectSuit;
-    public static ModKeybind ArmorMode;
+    public static ModKeybind AttackModes;
 
     public static void RegisterKeybindWithCategory(ref ModKeybind variableSavedTo, Mod mod, string category, string name, string defaultBinding)
     {
@@ -15,18 +15,18 @@ public class KeybindSystem : ModSystem
 
     public override void Load()
     {
-        RegisterKeybindWithCategory(ref ToggleFaceplate, Mod, "Iron Man", "ToggleFaceplate", "G");
+        RegisterKeybindWithCategory(ref BuildMode, Mod, "Iron Man", "ToggleBuildMode", "G");
         RegisterKeybindWithCategory(ref ToggleFlight, Mod, "Iron Man", "ToggleFlight, Cannot be Mount Key", "F");
         //RegisterKeybindWithCategory(ref EjectSuit, Mod, "Iron Man", "EjectSuit", "X");
-        RegisterKeybindWithCategory(ref ArmorMode, Mod, "Iron Man", "ToggleArmorMode", "Q");
+        RegisterKeybindWithCategory(ref AttackModes, Mod, "Iron Man", "ToggleAttackModes", "Q");
 
     }
 
     public override void Unload()
     {
-        ToggleFaceplate = null;
+        BuildMode = null;
         ToggleFlight = null;
         //EjectSuit = null;
-        ArmorMode = null;
+        AttackModes = null;
     }
 }

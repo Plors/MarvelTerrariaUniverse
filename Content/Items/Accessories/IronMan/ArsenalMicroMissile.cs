@@ -3,7 +3,6 @@ using MarvelTerrariaUniverse.Content.Buffs;
 using MarvelTerrariaUniverse.Content.Projectiles.Arsenal;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Map;
 using Terraria.ModLoader;
 
 
@@ -22,7 +21,7 @@ public class ArsenalMicroMissile : ArsenalItem
         {
             return;
         }
-        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()) || IMplayer.CurrentArmorMode == IronManPlayer.ArmorMode.Build)
         {
             return;
         }
@@ -31,6 +30,7 @@ public class ArsenalMicroMissile : ArsenalItem
         relativeMousePos = Vector2.Normalize(relativeMousePos) * 10;
         if (offCD)
         {
+            IMplayer.ArmRotation = true;
             //adjust dmg in the projectile spawn here to balance
             Projectile.NewProjectile(Terraria.Entity.GetSource_None(), player.Center, relativeMousePos, ModContent.ProjectileType<Missile>(), 50, 10);
             offCD = false;

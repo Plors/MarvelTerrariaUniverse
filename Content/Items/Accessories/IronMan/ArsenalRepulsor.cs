@@ -21,7 +21,7 @@ public class ArsenalRepulsor : ArsenalItem
             return;
         }
 
-        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()) || IMplayer.CurrentArmorMode == IronManPlayer.ArmorMode.Build)
         {
             return;
         }

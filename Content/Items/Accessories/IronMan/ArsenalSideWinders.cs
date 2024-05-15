@@ -10,15 +10,15 @@ namespace MarvelTerrariaUniverse.Content.Items.Accessories.IronMan;
 public class ArsenalSideWinders : ArsenalItem
 {
     //get the current instance of iron man player
-    private int ArmorMode = 0;
     private int cd = 0;
     private int releaseTimer = 0;
     private bool offCD = true;
     private bool activated = false;
     public override void UpdateArsenal(Player player)
     {
+        IronManPlayer IMplayer = player.GetModPlayer<IronManPlayer>();
         base.UpdateArsenal(player);
-        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()) || IMplayer.CurrentArmorMode == IronManPlayer.ArmorMode.Build)
         {
             return;
         }
@@ -30,9 +30,8 @@ public class ArsenalSideWinders : ArsenalItem
     {
         base.UpdateAccessory(player, hideVisual);
         IronManPlayer ironManPlayer = Main.LocalPlayer.GetModPlayer<IronManPlayer>();
-        ArmorMode = ironManPlayer.ArmorMode;
         // create a vector 2 that just goes down
-        if (ArmorMode == 0)
+        if (ironManPlayer.CurrentArmorMode == IronManPlayer.ArmorMode.AOE)
         {
             Vector2 down = new Vector2(0, 1);
             down = Vector2.Normalize(down) * 10;

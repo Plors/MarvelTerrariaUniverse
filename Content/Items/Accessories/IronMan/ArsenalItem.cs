@@ -75,5 +75,10 @@ public abstract class ArsenalItem : ModItem
         {
             return;
         }
+        IronManPlayer IMplayer = player.GetModPlayer<IronManPlayer>();
+        if (IMplayer.CurrentArmorMode == IronManPlayer.ArmorMode.Build)
+        {
+            return;
+        }
     }
 }

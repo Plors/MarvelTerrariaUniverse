@@ -19,7 +19,7 @@ public class ArsenalCrudeMissile : ArsenalItem
         base.UpdateArsenal(player);
 
         // disables if player in water
-        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()) || IMplayer.CurrentArmorMode == IronManPlayer.ArmorMode.Build)
         {
             return;
         }

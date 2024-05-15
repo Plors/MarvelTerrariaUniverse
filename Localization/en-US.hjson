@@ -85,6 +85,7 @@ Mods: {
 			ReloadUI.DisplayName: Reload UI
 			ToggleArmorMode.DisplayName: Toggle Armor Mode
 			"ToggleFlight, Cannot be Mount Key.DisplayName": Toggle Flight,  Cannot be  Mount  Key
+			ToggleAttackModes.DisplayName: Toggle Attack Modes
 		}
 
 		IronMan: {

@@ -18,7 +18,7 @@ public class ArsenalCrudeFlamethrower : ArsenalItem
 
         // this runs every frame when you have the arsenal selected and press the left mouse button
         base.UpdateArsenal(player);
-        if (player.HasBuff(ModContent.BuffType<Waterlogged>()))
+        if (player.HasBuff(ModContent.BuffType<Waterlogged>()) || IMplayer.CurrentArmorMode == IronManPlayer.ArmorMode.Build)
         {
             return;
         }

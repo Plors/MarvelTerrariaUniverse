@@ -1,7 +1,6 @@
 ﻿using Terraria.ModLoader;
 using MarvelTerrariaUniverse.Content.Items.Accessories.IronMan;
 using System.Collections.Generic;
-using System.Security.Policy;
 using Terraria;
 using MarvelTerrariaUniverse.Content.Buffs;
 
@@ -12,7 +11,7 @@ public class Mk1Helmet : IronManArmorHelmet<Mk1Chestplate, Mk1Leggings> { }
 [AutoloadEquip(EquipType.Body), Mark(1)]
 public class Mk1Chestplate : IronManArmorChestplate
 {
-    public override List<int> Arsenal => new() { ModContent.ItemType<ArsenalCrudeFlamethrower>(), ModContent.ItemType<ArsenalCrudeMissile>(), ModContent.ItemType<ArsenalRocketBoots>()};
+    public override List<int> Arsenal => new() { ModContent.ItemType<ArsenalCrudeFlamethrower>(), ModContent.ItemType<ArsenalCrudeMissile>()};
 
     public override void UpdateEquip(Player player)
     {
@@ -23,6 +22,10 @@ public class Mk1Chestplate : IronManArmorChestplate
         }
         //increase defense by 20
         player.statDefense += 20;
+        //rocket boots effect
+        player.rocketBoots = 2;
+        //limiting rocket boots time, tbh idk how long this is, system is weird
+        player.rocketTimeMax = 5;
     }
 }
 

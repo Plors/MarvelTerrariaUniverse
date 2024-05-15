@@ -31,17 +31,23 @@ public class IronManPlayer : ModPlayer
         Opened = 2,
     }
 
+    public enum ArmorMode
+    {
+        AOE = 0,
+        ST = 1,
+        Build = 2
+    }
+
     public List<ModAccessorySlot> ArsenalSlots = ModContent.GetContent<ModAccessorySlot>().Where(x => x.Mod.Name == nameof(MarvelTerrariaUniverse) && x is BaseCustomLoadoutAccessorySlot).ToList();
 
     public SuitState CurrentSuitState = SuitState.None;
     public HelmetState CurrentHelmetState = HelmetState.Closed;
+    public ArmorMode CurrentArmorMode = ArmorMode.AOE;
 
     public int Mark = 0;
     public int LastUsedLoadoutIndex = 0;
 
     public int SuitCycleTimer = 0;
-
-    public int ArmorMode = 0;
 
     public bool ArmRotation = false;
     public int ArmRotTimer = 0;
@@ -59,6 +65,9 @@ public class IronManPlayer : ModPlayer
     public void UnequipSuit()
     {
         Mark = 0;
+        CurrentArmorMode = ArmorMode.AOE;
+        CurrentSuitState = SuitState.None;
+        CurrentHelmetState = HelmetState.Closed;
         Player.mount.Dismount(Player);
         Player.cursorItemIconEnabled = true;
         Player.GetModPlayer<LoadoutPlayer>().ClearCurrentLoadout();
@@ -172,7 +181,9 @@ public class IronManPlayer : ModPlayer
 
     public void ToggleArmorMode()
     {
-        ArmorMode = ArmorMode == 0 ? 1 : 0;
+        if (CurrentArmorMode == ArmorMode.AOE) CurrentArmorMode = ArmorMode.ST;
+        else if (CurrentArmorMode == ArmorMode.ST) CurrentArmorMode = ArmorMode.AOE;
+        else if (CurrentArmorMode == ArmorMode.Build) CurrentArmorMode = ArmorMode.AOE;
     }
 
     public void UpdateFlight()
@@ -241,12 +252,28 @@ public class IronManPlayer : ModPlayer
         }
     }
 
+    public void ClearBuffs()
+    {
+        // remove buff IDs from player: 1-19, 26-29, 34, 58-60, 62,63, 71, 73-79, 95-100, 108, 109, 113-117
+        for (int i = 1; i <= 19; i++) Player.ClearBuff(i);
+        for (int i = 26; i <= 29; i++) Player.ClearBuff(i);
+        Player.ClearBuff(34);
+        for (int i = 58; i <= 60; i++) Player.ClearBuff(i);
+        Player.ClearBuff(62);
+        Player.ClearBuff(63);
+        Player.ClearBuff(71);
+        for (int i = 73; i <= 79; i++) Player.ClearBuff(i);
+        for (int i = 95; i <= 100; i++) Player.ClearBuff(i);
+        Player.ClearBuff(108);
+        Player.ClearBuff(109);
+        for (int i = 113; i <= 117; i++) Player.ClearBuff(i);
+    }
 
     public override void PostUpdate()
     {
         if (Player.HasBuff(BuffID.Frozen) || Player.HasBuff(ModContent.BuffType<Waterlogged>())) { CurrentSuitState = SuitState.None; Player.mount.Dismount(Player); }
         if (Mark == 0) return;
-        // CycleSuits(60);
+        ClearBuffs();
         Player.cursorItemIconEnabled = false;
 
         if (ArmRotation)
@@ -312,7 +339,15 @@ public class IronManPlayer : ModPlayer
 
     public override bool CanUseItem(Item item)
     {
-        if (Mark != 0) return false;
+        if (Mark != 0)
+        {
+            if (CurrentArmorMode != ArmorMode.Build) return false;
+            if (CurrentArmorMode == ArmorMode.Build)
+            {
+                if (item.pick > 0 || item.axe > 0 || item.hammer > 0) return true;
+                if (item.damage > 0) return false;
+            }
+        }
         return base.CanUseItem(item);
     }
 
@@ -320,11 +355,16 @@ public class IronManPlayer : ModPlayer
     {
         if (Mark == 0) return;
 
-        if (KeybindSystem.ToggleFaceplate.JustPressed && !PlayFaceplateAnimation) PlayFaceplateAnimation = true;
+        if (KeybindSystem.BuildMode.JustPressed && !PlayFaceplateAnimation)
+        {
+            if (ArmorMode.Build == CurrentArmorMode) ToggleArmorMode();
+            else CurrentArmorMode = ArmorMode.Build;
+            PlayFaceplateAnimation = true;
+        }
 
         if (KeybindSystem.ToggleFlight.JustPressed) ToggleFlight();
 
-        if (KeybindSystem.ArmorMode.JustPressed) ToggleArmorMode();
+        if (KeybindSystem.AttackModes.JustPressed) ToggleArmorMode();
     }
 
     public override void Load()
