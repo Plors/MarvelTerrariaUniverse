@@ -1,5 +1,6 @@
 ﻿using MarvelTerrariaUniverse.Common.CustomLoadout;
 using MarvelTerrariaUniverse.Common.Net;
+using MarvelTerrariaUniverse.Common.UI.IronMan;
 using MarvelTerrariaUniverse.Content.Buffs;
 using MarvelTerrariaUniverse.Content.Items.Armor.IronMan;
 using MarvelTerrariaUniverse.Content.Mounts;
@@ -64,6 +65,8 @@ public class IronManPlayer : ModPlayer
 
     public void UnequipSuit()
     {
+        if (Player.HasBuff(BuffID.Frozen) || Player.HasBuff(ModContent.BuffType<Waterlogged>())) return;
+
         Mark = 0;
         CurrentArmorMode = ArmorMode.AOE;
         CurrentSuitState = SuitState.None;
@@ -88,7 +91,7 @@ public class IronManPlayer : ModPlayer
         Player.armor[0] = new Item(Mod.Find<ModItem>($"Mk{Mark}Helmet").Type);
         Player.armor[1] = new Item(Mod.Find<ModItem>($"Mk{Mark}Chestplate").Type);
         Player.armor[2] = new Item(Mod.Find<ModItem>($"Mk{Mark}Leggings").Type);
-
+        
         Player.mount.Dismount(Player);
         Player.RemoveAllGrapplingHooks();
 
@@ -277,6 +280,8 @@ public class IronManPlayer : ModPlayer
         if (Player.HasBuff(BuffID.Frozen) || Player.HasBuff(ModContent.BuffType<Waterlogged>())) { CurrentSuitState = SuitState.None; Player.mount.Dismount(Player); }
         if (Mark == 0) return;
         ClearBuffs();
+
+        //Terraria.GameContent.UI.ResourceSets.On_ClassicPlayerResourcesDisplaySet.DrawPlayerLife(Player, new Terraria.GameContent.UI.ResourceSets.ResourceDrawSettings() { });
         Player.cursorItemIconEnabled = false;
 
         if (ArmRotation)
@@ -346,8 +351,10 @@ public class IronManPlayer : ModPlayer
         if (Mark != 0)
         {
             if (CurrentArmorMode != ArmorMode.Build) return false;
+            if (item.healMana > 0) return false;
             if (CurrentArmorMode == ArmorMode.Build)
             {
+                if (Mark <= 5 && CurrentSuitState == SuitState.Flying) return false;
                 if (item.pick > 0 || item.axe > 0 || item.hammer > 0) return true;
                 if (item.damage > 0) return false;
                 if (item.buffType > 0) return false;
@@ -370,7 +377,14 @@ public class IronManPlayer : ModPlayer
 
         if (KeybindSystem.ToggleFlight.JustPressed) ToggleFlight();
 
-        if (KeybindSystem.AttackModes.JustPressed) ToggleArmorMode();
+        if (KeybindSystem.AttackModes.JustPressed)
+        {
+            if (CurrentArmorMode == ArmorMode.Build)
+            {
+                PlayFaceplateAnimation = true;
+            }
+            ToggleArmorMode();
+        }
     }
 
     public override void Load()
