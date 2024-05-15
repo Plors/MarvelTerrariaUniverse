@@ -291,6 +291,7 @@ public class IronManPlayer : ModPlayer
         } else if (!ArmRotation) ArmRotTimer = 0;
         if (PlayFaceplateAnimation) UpdateFaceplateAnimation(5);
 
+
         EyeSlitColorEasterEgg();
 
         if (CurrentSuitState != SuitState.None) UpdateFlight();
@@ -349,6 +350,7 @@ public class IronManPlayer : ModPlayer
             {
                 if (item.pick > 0 || item.axe > 0 || item.hammer > 0) return true;
                 if (item.damage > 0) return false;
+                if (item.buffType > 0) return false;
             }
         }
         return base.CanUseItem(item);
@@ -360,6 +362,7 @@ public class IronManPlayer : ModPlayer
 
         if (KeybindSystem.BuildMode.JustPressed && !PlayFaceplateAnimation)
         {
+            if (CurrentHelmetState != HelmetState.Closed) CurrentArmorMode = ArmorMode.Build;
             if (ArmorMode.Build == CurrentArmorMode) ToggleArmorMode();
             else CurrentArmorMode = ArmorMode.Build;
             PlayFaceplateAnimation = true;
