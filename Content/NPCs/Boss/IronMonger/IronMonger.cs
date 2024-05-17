@@ -96,5 +96,46 @@ namespace MarvelTerrariaUniverse.Content.NPCs.Boss.IronMonger
             cooldownSlot = ImmunityCooldownID.Bosses; // use the boss immunity cooldown counter, to prevent ignoring boss attacks by taking damage from other sources
             return true;
         }
+
+        public override void AI()
+        {
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+            {
+                NPC.TargetClosest();
+            }
+
+            Player player = Main.player[NPC.target];
+
+
+            MoveTowards(destination);
+
+            if (Timer == 0)
+            {
+                if (phase == 0)
+                {
+                    if (attack == 0)
+                    {
+                        destination = player.Center;
+                        Timer = 60;
+                    }
+                    else if (attack == 1)
+                    {
+                        destination = LastFirstStageDestination;
+                        Timer = 60;
+                    }
+                }
+            }
+            else
+            {
+                Timer--;
+            }
+        }
+
+        private void MoveTowards(Vector2 destination)
+        {
+            Vector2 direction = destination - NPC.Center;
+            direction.Normalize();
+            NPC.velocity = direction * 3;
+        }
     }
 }
