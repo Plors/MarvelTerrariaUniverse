@@ -137,5 +137,10 @@ namespace MarvelTerrariaUniverse.Content.NPCs.Boss.IronMonger
             direction.Normalize();
             NPC.velocity = direction * 3;
         }
+
+        public override void FindFrame(int frameHeight)
+        {
+            NPC.spriteDirection = NPC.direction;
+        }
     }
 }
