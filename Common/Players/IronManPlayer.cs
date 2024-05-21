@@ -324,7 +324,7 @@ public class IronManPlayer : ModPlayer
 
         if (CurrentHelmetState != HelmetState.Closed) Player.head = EquipLoader.GetEquipSlot(Mod, $"Mk{Mark}Helmet_HeadAlt{(int)CurrentHelmetState}", EquipType.Head);
 
-        if ((CurrentSuitState == SuitState.Flying || CurrentSuitState == SuitState.Hovering) && Mark != 1) Player.body = EquipLoader.GetEquipSlot(Mod, $"Mk{Mark}Chestplate_BodyAlt", EquipType.Body);
+        // if ((CurrentSuitState == SuitState.Flying || CurrentSuitState == SuitState.Hovering) && Mark != 1) Player.body = EquipLoader.GetEquipSlot(Mod, $"Mk{Mark}Chestplate_BodyAlt", EquipType.Body);
 
         if (CurrentSuitState == SuitState.Hovering && Mark != 1) Player.legs = EquipLoader.GetEquipSlot(Mod, $"Mk{Mark}Leggings_LegsAlt", EquipType.Legs);
     }
@@ -354,7 +354,7 @@ public class IronManPlayer : ModPlayer
             if (item.healMana > 0) return false;
             if (CurrentArmorMode == ArmorMode.Build)
             {
-                if (Mark <= 5 && CurrentSuitState == SuitState.Flying) return false;
+                if (Mark <= 5 && (CurrentSuitState == SuitState.Flying || CurrentSuitState == SuitState.Hovering)) return false;
                 if (item.pick > 0 || item.axe > 0 || item.hammer > 0) return true;
                 if (item.damage > 0) return false;
                 if (item.buffType > 0) return false;
